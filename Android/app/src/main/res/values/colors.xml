@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="theme_light">@color/blue_light</color>
+    <color name="theme_default">@color/blue_default</color>
+    <color name="theme_dark">@color/blue_dark</color>
+    <color name="theme_accent">@color/blue_accent</color>
+
+    <!-- RCC Free
+    <color name="theme_light">@color/blue_light</color>
+    <color name="theme_default">@color/blue_default</color>
+    <color name="theme_dark">@color/blue_dark</color>
+    <color name="theme_accent">@color/blue_accent</color>
+    -->
+
+    <!-- RCC Pro
+    <color name="theme_light">@color/red_light</color>
+    <color name="theme_default">@color/red_default</color>
+    <color name="theme_dark">@color/red_dark</color>
+    <color name="theme_accent">@color/red_accent</color>
+    -->
+
+    <!-- Input Remote
+    <color name="theme_light">@color/bw_light</color>
+    <color name="theme_default">@color/bw_default</color>
+    <color name="theme_dark">@color/bw_dark</color>
+    <color name="theme_accent">@color/bw_accent</color>
+    -->
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- RCC Free -->
+    <color name="blue_light">#4fc3f7</color>
+    <color name="blue_default">#03a9f4</color>
+    <color name="blue_dark">#0288d1</color>
+    <color name="blue_accent">@color/purple_default</color>
+
+    <!-- RCC Pro -->
+    <color name="red_light">#f44336</color>
+    <color name="red_default">#d32f2f</color>
+    <color name="red_dark">#b71c1c</color>
+    <color name="red_accent">#5d4037</color>
+
+    <!-- Input Remote -->
+    <color name="bw_light">#777777</color>
+    <color name="bw_default">#444444</color>
+    <color name="bw_dark">#222222</color>
+    <color name="bw_accent">#999999</color>
+
+    <color name="pink_default">#e91e63</color>
+    <color name="purple_default">#9c27b0</color>
+    <color name="purple_deep_default">#673ab7</color>
+
+    <color name="grey_xlight">#EEEEEE</color>
+    <color name="grey_light">#AAAAAA</color>
+
+    <color name="text_white">#CCFFFFFF</color>
+    <color name="text_white_light">#99FFFFFF</color>
+
+    <color name="text_black">#CC000000</color>
+    <color name="text_black_light">#99000000</color>
+    <color name="text_black_bright">#66000000</color>
+
+    <color name="navigation_item">@color/white</color>
+    <color name="navigation_item_highlighted">#22000000</color>
+    <color name="navigation_item_down">#33000000</color>
+</resources>
