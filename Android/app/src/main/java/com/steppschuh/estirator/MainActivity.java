@@ -14,13 +14,23 @@ import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 
+    MobileApp app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        app = (MobileApp) getApplication();
+        if (!app.isInitialized) {
+            app.initialize(this);
+        } else {
+            app.setContextActivity(this);
+        }
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new FragmentEstimator())
                     .commit();
         }
     }

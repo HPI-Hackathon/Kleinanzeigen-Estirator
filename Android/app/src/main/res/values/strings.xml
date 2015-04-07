@@ -2,4 +2,12 @@
     <string name="app_name">Kleinanzeigen Estirator</string>
     <string name="hello_world">Hai</string>
     <string name="action_settings">Settings</string>
+
+    <string name="title_estimate">Estimate Prices</string>
+    <string name="title_ranking">List Products</string>
+
+    <string name="estimate_price">Estimate the price for this item:</string>
+    <string name="skip_item">Skip</string>
+    <string name="submit_item">Submit</string>
+
 </resources>
