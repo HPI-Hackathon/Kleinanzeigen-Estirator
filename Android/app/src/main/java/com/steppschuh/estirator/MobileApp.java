@@ -10,20 +10,17 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MobileApp extends Application {
 
     public static final String TAG = "estimator";
+
     public static final String API_USER = "hpi_hackathon";
     public static final String API_PASS = "dsk38a1l";
+
+    public static final int ESTIMATED_ITEMS_COUNT = 10; // request X estimations before showing the ranking
 
     public boolean isInitialized = false;
     private Activity contextActivity;
@@ -99,8 +96,8 @@ public class MobileApp extends Application {
                             try {
                                 items.add(EbayItem.parseFromJson((JsonObject) adElement));
                             } catch (Exception ex) {
-                                Log.e(TAG, "Unable to parse item");
-                                ex.printStackTrace();
+                                Log.e(TAG, "Unable to parse item: " + ex.getMessage());
+                                //ex.printStackTrace();
                             }
                         }
 
@@ -111,6 +108,42 @@ public class MobileApp extends Application {
             Log.e(TAG, "Error while requesting items");
             ex.printStackTrace();
         }
+    }
+
+    public EbayItem getItemByID(String id) {
+        if (items.size() > 0) {
+            for (EbayItem item : items) {
+                if (item.getId().equals(id)) {
+                    return item;
+                }
+            }
+        }
+        return null;
+    }
+
+    public EbayItem getNextItem() {
+        Log.d(MobileApp.TAG, "Searching for next item (out of " + items.size() + ")");
+        if (items.size() > 0) {
+            for (EbayItem item : items) {
+                if (!item.itemSkipped() && !item.hasEstimatedPrice()) {
+                    return item;
+                }
+            }
+            // all items estimated
+            requestItems();
+        }
+        Log.w(MobileApp.TAG, "No item available");
+        return null;
+    }
+
+    public int getEstimatedItemsCount() {
+        int count = 0;
+        for (EbayItem item : items) {
+            if (item.hasEstimatedPrice()) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private String getItemRequestURL() {

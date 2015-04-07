@@ -10,4 +10,8 @@
     <string name="skip_item">Skip</string>
     <string name="submit_item">Submit</string>
 
+
+    <string name="message_no_more_items">You have estimated all items</string>
+    <string name="message_enough_estimations">Thanks for your estimations</string>
+
 </resources>

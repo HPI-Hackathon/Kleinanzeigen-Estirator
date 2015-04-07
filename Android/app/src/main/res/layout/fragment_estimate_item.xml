@@ -137,12 +137,14 @@
                             android:layout_height="wrap_content">
 
                             <Button
+                                android:id="@+id/skipItem"
                                 android:text="@string/skip_item"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
 
                             <Button
+                                android:id="@+id/submitItem"
                                 android:text="@string/submit_item"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
