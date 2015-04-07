@@ -1,6 +1,11 @@
 package com.steppschuh.estirator;
 
-public class ebayItem {
+import android.util.Log;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+public class EbayItem {
 
     private String id;
     private String title;
@@ -12,7 +17,10 @@ public class ebayItem {
 
     private boolean hasEstimatedPrice;
 
-    public ebayItem(String id, String title, String description, String imageUrl, double price) {
+    public EbayItem() {
+    }
+
+    public EbayItem(String id, String title, String description, String imageUrl, double price) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,7 +37,20 @@ public class ebayItem {
             generatePricePercentage();
         }
 
-        return (int) Math.round((100 * price) / pricePercentage);
+        return (int) Math.round((percentage * price) / pricePercentage);
+    }
+
+    public static EbayItem parseFromJson(JsonObject jsonObject) {
+        EbayItem item = new EbayItem();
+
+        //Log.d(MobileApp.TAG, "Parsing JSON item: " + jsonObject);
+
+        item.setId(jsonObject.getAsJsonPrimitive("id").getAsString());
+        item.setTitle(jsonObject.getAsJsonObject("title").getAsJsonPrimitive("value").getAsString());
+
+
+        Log.d(MobileApp.TAG, "Item id: " + item.getId());
+        return item;
     }
 
     /**
