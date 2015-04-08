@@ -1,0 +1,15 @@
+Metadata-Version: 1.0
+Name: BigQuery-Python
+Version: 1.0.0
+Summary: Simple Python client for interacting with Google BigQuery.
+Home-page: https://github.com/tylertreat/BigQuery-Python
+Author: Tyler Treat
+Author-email: ttreat31@gmail.com
+License: Apache
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python

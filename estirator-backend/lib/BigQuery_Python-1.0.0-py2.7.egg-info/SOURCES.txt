@@ -1,0 +1,16 @@
+setup.cfg
+setup.py
+BigQuery_Python.egg-info/PKG-INFO
+BigQuery_Python.egg-info/SOURCES.txt
+BigQuery_Python.egg-info/dependency_links.txt
+BigQuery_Python.egg-info/requires.txt
+BigQuery_Python.egg-info/top_level.txt
+bigquery/__init__.py
+bigquery/client.py
+bigquery/errors.py
+bigquery/query_builder.py
+bigquery/schema_builder.py
+bigquery/tests/__init__.py
+bigquery/tests/test_client.py
+bigquery/tests/test_query_builder.py
+bigquery/tests/test_schema_builder.py
