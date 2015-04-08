@@ -20,12 +20,16 @@ public class MobileApp extends Application {
     public static final String API_USER = "hpi_hackathon";
     public static final String API_PASS = "dsk38a1l";
 
-    public static final int ESTIMATED_ITEMS_COUNT = 10; // request X estimations before showing the ranking
+    public static final int PRICE_MINIMUM = 5;
+    public static final int PRICE_MAXIMUM = 15000;
+
+    public static final int ESTIMATED_ITEMS_COUNT = 5; // request X estimations before showing the ranking
 
     public boolean isInitialized = false;
     private Activity contextActivity;
 
     private List<EbayItem> items;
+    private int currentPageIndex = 0;
 
     /**
      * Methods for initializing the app
@@ -147,7 +151,16 @@ public class MobileApp extends Application {
     }
 
     private String getItemRequestURL() {
-        return "https://api.ebay-kleinanzeigen.de/api/ads.json";
+        String baseUrl = "https://api.ebay-kleinanzeigen.de/api/ads.json";
+
+        baseUrl += "?pictureRequired=true";
+        baseUrl += "&minPrice=" + PRICE_MINIMUM;
+        baseUrl += "&maxPrice=" + PRICE_MAXIMUM;
+        baseUrl += "&priceType=" + "SPECIFIED_AMOUNT";
+        baseUrl += "&page=" + currentPageIndex;
+        baseUrl += "&size=" + "20";
+
+        return baseUrl;
     }
 
     /**
@@ -167,5 +180,13 @@ public class MobileApp extends Application {
 
     public void setInitialized(boolean isInitialized) {
         this.isInitialized = isInitialized;
+    }
+
+    public List<EbayItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<EbayItem> items) {
+        this.items = items;
     }
 }

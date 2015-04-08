@@ -1,5 +1,6 @@
 package com.steppschuh.estirator;
 
+import android.graphics.Color;
 import android.text.Html;
 import android.util.Log;
 
@@ -7,6 +8,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.ByteArrayBuffer;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class EbayItem {
 
@@ -44,6 +57,64 @@ public class EbayItem {
         }
 
         return (int) Math.round((percentage * price) / pricePercentage);
+    }
+
+    public int getColorIndocator() {
+        int difference = getRelativeDifference();
+        int color;
+
+        if (difference <= 100) {
+            color = Color.argb(200,0,255,0);
+
+        } else {
+            color = Color.argb(200,255,0,0);
+        }
+
+        return color;
+    }
+
+    public int getRelativeDifference() {
+        return (int) Math.round((100 * estimatedPrice) / price);
+    }
+
+    public String getRelativeDifferenceString() {
+        int difference = getRelativeDifference();
+        String differenceString = "";
+
+        if (difference < 100) {
+            differenceString += "-";
+        } else if (difference > 100) {
+            differenceString += "+";
+        }
+
+        differenceString += String.valueOf(difference) + "%";
+
+        return differenceString;
+    }
+
+    public void submitEstimation() {
+        (new Thread() {
+            public void run() {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpGet httpget = new HttpGet(generateSubmitURL());
+                HttpResponse response;
+                try {
+                    response = httpclient.execute(httpget);
+                    HttpEntity entity = response.getEntity();
+                    Log.d(MobileApp.TAG, "Submitted estimation: " + generateSubmitURL());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public String generateSubmitURL() {
+        String baseUrl = "http://estirator.appspot.com/estimate/";
+        baseUrl += getId() + "/";
+        baseUrl += String.valueOf((int) getEstimatedPrice()) + "/";
+
+        return baseUrl;
     }
 
     public static EbayItem parseFromJson(JsonObject jsonObject) throws Exception{
@@ -134,7 +205,6 @@ public class EbayItem {
     }
 
     public void setEstimatedPrice(double estimatedPrice) {
-        Log.d(MobileApp.TAG, "Item price estimated: " + estimatedPrice);
         this.estimatedPrice = estimatedPrice;
     }
 

@@ -1,18 +1,23 @@
 package com.steppschuh.estirator;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 public class FragmentEstimator extends Fragment {
@@ -23,6 +28,7 @@ public class FragmentEstimator extends Fragment {
     View contentFragment;
     TextView estimatedPriceValue;
     TextView itemTitle;
+    RelativeLayout itemTitleContainer;
     ImageView itemImage;
     Button submitItem;
     Button skipItem;
@@ -32,7 +38,7 @@ public class FragmentEstimator extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        contentFragment = inflater.inflate(R.layout.fragment_estimate_item, container, false);
+        contentFragment = inflater.inflate(R.layout.fragment_estimator, container, false);
 
         app = (MobileApp) getActivity().getApplicationContext();
         getActivity().setTitle(getString(R.string.title_estimate));
@@ -47,6 +53,7 @@ public class FragmentEstimator extends Fragment {
         submitItem = (Button) contentFragment.findViewById(R.id.submitItem);
 
         itemTitle = (TextView) contentFragment.findViewById(R.id.itemNameLabel);
+        itemTitleContainer = (RelativeLayout) contentFragment.findViewById(R.id.itemNameContainer);
         estimatedPriceValue = (TextView) contentFragment.findViewById(R.id.estimatePriceValue);
         itemImage = (ImageView) contentFragment.findViewById(R.id.itemImage);
 
@@ -103,10 +110,12 @@ public class FragmentEstimator extends Fragment {
         EbayItem item = app.getItemByID(currentItem.getId());
         if (item != null) {
             app.getItemByID(currentItem.getId()).setEstimatedPrice(currentItem.getEstimatedPrice());
+            app.getItemByID(currentItem.getId()).submitEstimation();
         }
 
         if (app.getEstimatedItemsCount() >= MobileApp.ESTIMATED_ITEMS_COUNT) {
             Toast.makeText(getActivity(), getString(R.string.message_enough_estimations), Toast.LENGTH_LONG).show();
+            ((MainActivity) getActivity()).showEstimationResults();
         } else {
             showNextItem();
         }
@@ -132,7 +141,18 @@ public class FragmentEstimator extends Fragment {
         Ion.with(itemImage)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.error)
-                .load(item.getImageUrl());
+                .load(item.getImageUrl())
+                .setCallback(new FutureCallback<ImageView>() {
+                    @Override
+                    public void onCompleted(Exception e, ImageView result) {
+                        try {
+                            Bitmap bitmap = ((BitmapDrawable) result.getDrawable()).getBitmap();
+                            updateColors(bitmap);
+                        } catch (Exception ex) {
+
+                        }
+                    }
+                });
 
         currentItem = item;
 
@@ -142,9 +162,38 @@ public class FragmentEstimator extends Fragment {
     }
 
     private void updatePriceValue(int seekValue) {
-        int price = currentItem.percentageToPrice(seekValue);
-        currentItem.setEstimatedPrice(price);
-        estimatedPriceValue.setText(String.valueOf(price) + "€");
+        if (currentItem != null) {
+            int price = currentItem.percentageToPrice(seekValue);
+            currentItem.setEstimatedPrice(price);
+            estimatedPriceValue.setText(String.valueOf(price) + "€");
+        }
+    }
+
+    private void updateColors(Bitmap bitmap) {
+        //Bitmap bitmap = ((BitmapDrawable) itemImage.getDrawable()).getBitmap();
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            public void onGenerated(Palette palette) {
+                Palette.Swatch swatch = palette.getVibrantSwatch();
+
+                int rgbColor = swatch.getRgb();
+                // Gets the HSL values
+                // Hue between 0 and 360
+                // Saturation between 0 and 1
+                // Lightness between 0 and 1
+                float[] hslValues = swatch.getHsl();
+                // Gets the number of pixels represented by this swatch
+                int pixelCount = swatch.getPopulation();
+                // Gets an appropriate title text color
+                int titleTextColor = swatch.getTitleTextColor();
+                // Gets an appropriate body text color
+                int bodyTextColor = swatch.getBodyTextColor();
+
+                int backgroundColor = palette.getDarkMutedColor(Color.BLACK);
+
+                itemTitleContainer.setBackgroundColor(backgroundColor);
+                itemTitle.setTextColor(titleTextColor);
+            }
+        });
     }
 
     @Override
