@@ -23,7 +23,7 @@ public class MobileApp extends Application {
     public static final int PRICE_MINIMUM = 5;
     public static final int PRICE_MAXIMUM = 15000;
 
-    public static final int ESTIMATED_ITEMS_COUNT = 5; // request X estimations before showing the ranking
+    public static final int ESTIMATED_ITEMS_COUNT = 10; // request X estimations before showing the ranking
 
     public boolean isInitialized = false;
     private Activity contextActivity;

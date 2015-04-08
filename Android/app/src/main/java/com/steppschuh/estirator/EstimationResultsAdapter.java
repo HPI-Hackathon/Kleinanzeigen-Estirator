@@ -47,9 +47,9 @@ public class EstimationResultsAdapter extends ArrayAdapter<EbayItem> {
 
         // fill data
         ((TextView) rowView.findViewById(R.id.itemNameLabel)).setText(currentItem.getTitle());
-        ((TextView) rowView.findViewById(R.id.itemPriceValue)).setText(currentItem.getPrice() + "€");
+        ((TextView) rowView.findViewById(R.id.itemPriceValue)).setText(((int) currentItem.getPrice()) + "€");
         ((TextView) rowView.findViewById(R.id.itemDifferenceRelative)).setText(currentItem.getRelativeDifferenceString());
-        ((TextView) rowView.findViewById(R.id.itemDifferenceAbsolute)).setText((int) (currentItem.getPrice() - currentItem.getEstimatedPrice()) + "€");
+        ((TextView) rowView.findViewById(R.id.itemDifferenceAbsolute)).setText((int) (currentItem.getEstimatedPrice() - currentItem.getPrice()) + "€");
 
         ((TextView) rowView.findViewById(R.id.itemDifferenceRelative)).setTextColor(currentItem.getColorIndocator());
 

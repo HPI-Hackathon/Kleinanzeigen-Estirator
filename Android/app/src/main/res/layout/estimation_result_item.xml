@@ -50,6 +50,7 @@
                         android:id="@+id/itemDifferenceAbsolute"
                         android:text="40€"
                         android:gravity="center"
+                        android:alpha="0.5"
                         android:layout_below="@id/itemDifferenceRelative"
                         android:textSize="12sp"
                         android:layout_width="match_parent"

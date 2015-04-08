@@ -36,7 +36,7 @@
                     <ImageView
                         android:id="@+id/itemImage"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/sample_item"
+                        android:src="@drawable/placeholder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
@@ -50,7 +50,7 @@
 
                         <TextView
                             android:id="@+id/itemNameLabel"
-                            android:text="Random item name"
+                            android:text="Item Name"
                             android:layout_margin="10dp"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/abc_text_size_body_1_material"

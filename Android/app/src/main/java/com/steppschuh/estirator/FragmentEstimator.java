@@ -94,7 +94,8 @@ public class FragmentEstimator extends Fragment {
 
     private void showSampleItem() {
         EbayItem item = new EbayItem("1234", "Sample Item", "Description", "http://i.ebayimg.com/00/s/NjgxWDEwMjQ=/z/6nMAAOSwBLlVI-cr/$_45.JPG", 80.00);
-        showItem(item);
+        currentItem = item;
+        //showItem(item);
     }
 
     private void skipItem() {

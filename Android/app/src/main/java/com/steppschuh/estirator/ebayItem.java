@@ -64,10 +64,10 @@ public class EbayItem {
         int color;
 
         if (difference <= 100) {
-            color = Color.argb(200,0,255,0);
+            color = Color.argb(255,0,100,0);
 
         } else {
-            color = Color.argb(200,255,0,0);
+            color = Color.argb(255,100,0,0);
         }
 
         return color;
