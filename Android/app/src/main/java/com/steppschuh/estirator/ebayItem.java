@@ -87,6 +87,11 @@ public class EbayItem {
             differenceString += "+";
         }
 
+        difference = 100 - difference;
+        if (difference < 0) {
+            difference = difference * (-1);
+        }
+
         differenceString += String.valueOf(difference) + "%";
 
         return differenceString;
